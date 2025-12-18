@@ -48,8 +48,8 @@
               ]">
               <img v-if="item.image" :src="item.image"
                 class="w-full h-full object-contain p-1 transition-all duration-500" :class="item.collected
-                    ? 'opacity-100 scale-100'
-                    : 'opacity-0 scale-50'
+                  ? 'opacity-100 scale-100'
+                  : 'opacity-0 scale-50'
                   " />
               <span v-else class="text-4xl md:text-6xl font-balloon transition-all duration-500" :class="[
                 item.collected
@@ -261,8 +261,8 @@ import letterS from "../assets/img/S.png";
 import letterY from "../assets/img/Y.png";
 
 // --- Configuration ---
-const remainingSpins = ref(3); 
-const spinCount = ref(1); // [เพิ่ม] ตัวนับรอบการหมุน เพื่อให้องศามันเพิ่มขึ้นเรื่อยๆ
+const remainingSpins = ref(3);
+const spinCount = ref(1);
 
 // Reward Data
 const rewards = ref([
@@ -361,8 +361,8 @@ const spinTheWheel = () => {
   );
   const segmentAngle = 360 / rewards.value.length;
 
-  const totalDegree = 5400 * spinCount.value; 
-  
+  const totalDegree = 5400 * spinCount.value;
+
   const stopAngle = totalDegree - (rewardIndex * segmentAngle) - (segmentAngle / 2);
   const randomOffset = Math.floor(Math.random() * 20) - 10;
 
