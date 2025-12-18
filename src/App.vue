@@ -6,30 +6,37 @@
     <div class="absolute inset-0 sunburst opacity-60 animate-spin-slow z-1"></div>
     <div class="absolute inset-0 bg-radial-gradient from-transparent via-black/60 to-black z-1"></div>
 
-    <div class="absolute bottom-2 left-2 md:bottom-4 md:left-4 z-[100] opacity-90 pointer-events-none">
+    <div v-if="!showResultModal"
+      class="absolute bottom-2 left-2 md:bottom-4 md:left-4 z-[100] opacity-90 pointer-events-none">
       <img :src="hudImg" alt="HUD" class="h-10 md:h-14 w-auto drop-shadow-lg" />
     </div>
 
-    <div
-      class="absolute top-4 right-4 md:top-6 md:right-6 z-[100] flex items-center gap-3 bg-black rounded-full px-4 py-2 md:px-6 md:py-3 border border-gray-800 shadow-xl">
-      <div class="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
-        <img src="../assets/img/Lucky_wheel.png" alt="Icon"
-          class="w-full h-full object-contain filter drop-shadow-md" />
+    <div class="absolute top-4 right-4 md:top-6 md:right-6 z-[200] flex items-end gap-3">
+
+      <div v-if="!showResultModal"
+        class="flex items-center gap-3 bg-black rounded-full px-4 py-2 md:px-6 md:py-3 border border-gray-800 shadow-xl">
+        <div class="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
+          <img src="../assets/img/Lucky_wheel.png" alt="Icon"
+            class="w-full h-full object-contain filter drop-shadow-md" />
+        </div>
+        <span class="text-white font-bold text-sm md:text-xl tracking-wide font-sans">
+          Remaining spin : {{ remainingSpins }}
+        </span>
       </div>
-      <span class="text-white font-bold text-sm md:text-xl tracking-wide font-sans">
-        Remaining spin : {{ remainingSpins }}
-      </span>
+       <img :src="logoLuvImg" alt="Logo LUV"
+        class="w-14 md:w-14 h-auto object-contain drop-shadow-xl filter hover:brightness-110 transition-all" />
     </div>
 
     <div class="relative z-10 w-full h-full flex flex-col">
       <div class="flex-1 flex flex-col items-center justify-center px-4 transition-all duration-500"
         :class="showWheelModal ? 'blur-sm scale-95 opacity-50' : ''">
+        
         <div class="text-center space-y-4 mb-8">
           <h1
             class="text-5xl md:text-7xl font-display font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] flex justify-center items-center">
             <img src="../assets/img/Logo.png" alt="Logo" class="max-h-24 md:max-h-32" />
           </h1>
-          <p class="text-blue-300/80 text-sm md:text-base italic max-w-2xl mx-auto">
+          <p class="text-white-300/80 text-sm md:text-base italic max-w-2xl mx-auto">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem
             iure explicabo fuga.
           </p>
@@ -38,7 +45,7 @@
         <div class="flex flex-wrap justify-center gap-2 md:gap-3 py-8 max-w-5xl">
           <div v-for="(item, index) in targetWord" :key="index" class="group relative">
             <button @click="handleSlotClick(index)" :disabled="item.collected || remainingSpins <= 0"
-              class="w-12 h-16 md:w-20 md:h-24 flex items-center justify-center rounded-lg border-2 transition-all duration-300 transform"
+              class="w-12 h-16 md:w-20 md:h-24 flex items-center justify-center rounded-lg border-2 transition-all duration-300 transform p-4"
               :class="[
                 item.collected
                   ? 'bg-blue-600/20 border-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.6)] scale-100'
@@ -69,11 +76,11 @@
 
         <div class="mt-8 text-center">
           <button
-            class="px-12 py-3 rounded-full font-bold text-xl tracking-wider transition-all duration-300 transform border-2"
+            class="flex items-center justify-center w-[200px] h-[44px] rounded-[4px] px-2 gap-2 border-2 transition-all duration-300 font-bold text-base tracking-wider mx-auto"
             :class="[
               isAllCollected
-                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 border-white/20 text-white shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 active:scale-95 cursor-pointer animate-pulse-slow'
-                : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed opacity-60',
+                ? 'bg-[#2098E2]/80 border-white/10 shadow-[0_0_10px_0_#2098E240] text-white hover:bg-[#2098E2] hover:scale-105 active:scale-95 cursor-pointer'
+                : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed opacity-60'
             ]" :disabled="!isAllCollected" @click="openWheelModal">
             CREATE NOW!
           </button>
@@ -94,45 +101,56 @@
           <img src="../assets/img/Logo.png" alt="" />
         </h2>
 
-        <div class="relative w-[380px] h-[380px] md:w-[600px] md:h-[600px] flex items-center justify-center">
-          <div class="absolute -top-6 left-1/2 -translate-x-1/2 z-30 w-16 h-20 md:w-24 md:h-28 filter drop-shadow-xl">
-            <img :src="pinImg" class="w-full h-full object-contain" alt="Pin" />
-          </div>
+        <div class="relative w-[450px] h-[450px] md:w-[700px] md:h-[700px] flex items-center justify-center">
 
-          <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none scale-105">
-            <img :src="wrapperImg" class="w-full h-full object-contain opacity-90 drop-shadow-2xl" alt="Wrapper" />
+          <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+             <img :src="circleBlueImg" class="w-full h-full object-contain  scale-90 border-[6px] border-[#79CCFF] rounded-full" alt="Blue Glow" />
+          </div>
+          
+          <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+             <img :src="wrapperImg" class="w-[115%] h-[115%] object-contain drop-shadow-xl scale-110" alt="Wrapper" />
           </div>
 
           <div
-            class="relative z-10 w-full h-full rounded-full border-[8px] md:border-[12px] border-[#3b82f6] shadow-[0_0_50px_rgba(37,99,235,0.5)] overflow-hidden transition-transform duration-[3000ms] ease-spin-fast"
+            class="absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 z-40 w-20 h-24 md:w-32 md:h-40 filter drop-shadow-xl">
+            <img :src="pinImg" class="w-full h-full object-contain" alt="Pin" />
+          </div>
+
+          <div
+            class="relative z-20 w-[340px] h-[340px] md:w-[540px] md:h-[540px] rounded-full border-[8px] border-[#969696]/20 overflow-hidden transition-transform duration-[3000ms] ease-spin-fast bg-[#282828]"
+            style="box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);"
             :style="{ transform: `rotate(${wheelRotation}deg)` }">
-            <div class="absolute inset-0 bg-[#0f172a]"></div>
 
             <div v-for="(reward, index) in rewards" :key="'bg-' + reward.id"
-              class="absolute top-0 left-1/2 w-1/2 h-[50%] origin-bottom-left border-l border-white/10" :style="{
+              class="absolute top-0 left-1/2 w-1/2 h-[50%] origin-bottom-left border-l border-r border-[#ffffff]/10"
+              :style="{
                 transform: `rotate(${index * 45}deg) skewY(-45deg)`,
-                background: index % 2 === 0 ? '#1e293b' : '#334155',
-              }"></div>
+                background: index % 2 === 0
+                  ? '#282828'
+                  : 'linear-gradient(186.63deg, #2D2D2D 6.53%, #2C2C2C 96.3%)',
+              }">
+            </div>
 
-            <div class="absolute inset-0 w-full h-full pointer-events-none">
+          <div class="absolute inset-0 w-full h-full pointer-events-none">
               <div v-for="(reward, index) in rewards" :key="'content-' + reward.id"
                 class="absolute top-1/2 left-1/2 w-0 h-0 flex justify-center items-center" :style="{
                   transform: `rotate(${index * 45 + 22.5}deg)`,
                 }">
+                
                 <div
-                  class="flex flex-col items-center justify-center text-center transform -translate-y-[110px] md:-translate-y-[180px] w-32 md:w-40">
-                  <img :src="reward.resultImage" alt="item"
-                    class="w-16 h-auto md:w-28 object-contain mb-2 drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] transform hover:scale-110 transition-transform" />
+                  class="flex flex-col items-center justify-center text-center transform -translate-y-[120px] md:-translate-y-[180px] w-44 md:w-72">
 
-                  <div
-                    class="text-center bg-black/30 backdrop-blur-[2px] rounded-lg px-2 py-1 w-full flex flex-col items-center border border-white/5">
+                  <img :src="reward.resultImage" alt="item"
+                    class="w-full h-auto max-h-full md:max-h- object-contain mb-1 drop-shadow-md transform rotate-90 transition-transform" />
+
+                  <div class="text-center w-full flex flex-col items-center">
                     <span
-                      class="block text-[10px] md:text-sm font-bold text-white leading-tight shadow-black drop-shadow-md break-words max-w-full">
+                      class="block text-[10px] md:text-sm font-bold text-white leading-tight shadow-black drop-shadow-sm break-words max-w-full font-line-seed">
                       {{ reward.name }}
                     </span>
-                    <span class="block text-[9px] md:text-[10px] text-cyan-300 mt-0.5 font-medium"
+                    <span class="block text-[9px] md:text-[10px] text-gray-400 mt-0.5 font-medium"
                       v-if="reward.stock > 0">
-                      x{{ reward.stock }}
+                      เหลือ {{ reward.stock }}
                     </span>
                     <span class="block text-[9px] text-red-400 mt-0.5" v-else>
                       หมด
@@ -143,86 +161,78 @@
             </div>
 
             <div
-              class="absolute inset-0 m-auto w-[30%] h-[30%] rounded-full bg-gradient-to-b from-[#1e293b] to-[#0f172a] border-[4px] md:border-[6px] border-[#3b82f6] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] z-20 flex items-center justify-center">
-              <div
-                class="w-full h-full rounded-full bg-blue-500/10 flex items-center justify-center animate-pulse-slow">
-                <span class="font-display font-black text-blue-400/30 text-2xl md:text-4xl tracking-widest">LUV</span>
-              </div>
+              class="absolute inset-0 m-auto w-[30%] h-[30%] rounded-full bg-[#1C1C1C] border-[6px] border-[#ffffff]/10 shadow-inner z-20 flex items-center justify-center">
             </div>
           </div>
 
-          <button @click="spinTheWheel" :disabled="isSpinning || remainingSpins <= 0"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 md:w-28 md:h-28 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(56,189,248,0.6)] border-[4px] md:border-[6px] border-[#0f172a] hover:scale-110 active:scale-95 transition-all group overflow-hidden"
-            :class="remainingSpins <= 0 ? 'grayscale cursor-not-allowed' : ''">
-            <div
-              class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-            </div>
-            <span
-              class="relative font-black text-xl md:text-3xl italic tracking-tighter text-white drop-shadow-md group-hover:animate-pulse">
-              SPIN
-            </span>
-          </button>
-        </div>
+          <div class="absolute inset-0 m-auto w-[30%] h-[30%] z-30 flex items-center justify-center pointer-events-none">
+             <button @click="spinTheWheel" :disabled="isSpinning || remainingSpins <= 0"
+                class="pointer-events-auto relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center transition-all group hover:scale-105 active:scale-95"
+                :class="remainingSpins <= 0 ? 'grayscale cursor-not-allowed' : ''"
+                style="background: radial-gradient(63.29% 63.29% at 50% 36.71%, #79CCFF 0%, #209CE9 100%);
+                       box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5), 0px 0px 75px #1C1C1C;">
+                
+                <div class="absolute inset-0 rounded-full border-[4px] border-white opacity-20"></div>
+                
+                <span
+                  class="relative font-line-seed font-black text-2xl md:text-4xl tracking-wider text-white"
+                  style="text-shadow: 0px 0px 20px #209CE9;">
+                  SPIN
+                </span>
+              </button>
+          </div>
 
-        <button v-if="!isSpinning" @click="showWheelModal = false"
-          class="mt-4 text-gray-500 text-sm underline hover:text-white transition-colors">
-          กลับไปหน้าหลัก
-        </button>
+        </div>
       </div>
     </div>
 
     <div v-if="showResultModal"
-      class="fixed inset-0 z-[60] flex items-center justify-center bg-black animate-fade-in overflow-hidden">
-      <div class="absolute inset-0 transition-colors duration-1000 opacity-60" :class="[
-        wonReward?.theme === 'red'
-          ? 'bg-red-900'
-          : wonReward?.theme === 'green'
-            ? 'bg-green-900'
-            : wonReward?.theme === 'blue'
-              ? 'bg-blue-900'
-              : 'bg-gray-800',
+      @click="resetGameRound"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black animate-fade-in overflow-hidden cursor-pointer">
+
+      <div class="absolute inset-0 transition-colors duration-1000" :class="[
+        wonReward?.theme === 'red' ? 'bg-red-700/40' :
+        wonReward?.theme === 'green' ? 'bg-green-700/40' :
+        wonReward?.theme === 'blue' ? 'bg-blue-700/40' : 'bg-gray-800/40',
       ]"></div>
 
       <div class="absolute inset-0 opacity-40 sunburst-ray animate-spin-slow z-1"></div>
       <div class="absolute inset-0 bg-radial-gradient-center z-1"></div>
 
       <div class="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl px-4">
-        <div class="relative mb-8">
-          <h2 class="text-4xl md:text-6xl font-bold text-white tracking-widest drop-shadow-lg uppercase">
+
+        <div class="relative mb-2 flex flex-col items-center">
+          <h2 class="text-[48px] font-bold text-white text-center uppercase tracking-wide z-10 font-line-seed leading-none"
+            :style="{
+              textShadow: wonReward?.theme === 'red' ? '0px 0px 20px rgba(255, 0, 0, 0.5)' :
+                wonReward?.theme === 'green' ? '0px 0px 20px rgba(0, 255, 0, 0.5)' :
+                  wonReward?.theme === 'blue' ? '0px 0px 20px rgba(0, 0, 255, 0.5)' :
+                    '0px 0px 20px rgba(255, 255, 255, 0.3)'
+            }">
             CONGRATULATIONS!
           </h2>
-          <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-script text-6xl md:text-6xl opacity-90 whitespace-nowrap mt-6"
-            :class="[
-              wonReward?.theme === 'red'
-                ? 'text-red-500'
-                : wonReward?.theme === 'green'
-                  ? 'text-green-400'
-                  : wonReward?.theme === 'blue'
-                    ? 'text-blue-400'
-                    : 'text-gray-300',
-            ]" style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8)">
+
+          <p class="font-lucky-wheel whitespace-nowrap -mt-10 relative z-20"
+             :class="[
+               wonReward?.theme === 'red' ? 'text-[#209CE9]' :
+               wonReward?.theme === 'green' ? 'text-green-400' :
+               wonReward?.theme === 'blue' ? 'text-[#209CE9]' : 'text-[#209CE9]'
+             ]">
             Lucky Wheel
           </p>
         </div>
 
-        <p class="text-gray-200 text-lg md:text-xl font-light mb-10">
+        <p class="text-gray-200 text-lg md:text-xl font-light mb-10 mt-4">
           Wow! You've just won a
           <span class="font-bold text-white">{{ wonReward?.name }}</span>
         </p>
 
         <div class="relative flex items-center justify-center w-full py-10 mb-8">
-          <div class="absolute w-[400px] h-[400px] rounded-full border-2 border-white/10 scale-100 animate-pulse-slow">
-          </div>
-          <div class="absolute w-[300px] h-[300px] rounded-full border border-white/20 scale-90"></div>
 
           <div class="absolute w-64 h-64 rounded-full blur-[80px]" :class="[
-            wonReward?.theme === 'red'
-              ? 'bg-red-600/60'
-              : wonReward?.theme === 'green'
-                ? 'bg-green-500/60'
-                : wonReward?.theme === 'blue'
-                  ? 'bg-blue-500/60'
-                  : 'bg-white/30',
+            wonReward?.theme === 'red' ? 'bg-red-600' :
+            wonReward?.theme === 'green' ? 'bg-green-500' :
+            wonReward?.theme === 'blue' ? 'bg-blue-500' : 'bg-gray-600',
           ]"></div>
 
           <img :src="wonReward?.resultImage"
@@ -230,10 +240,6 @@
             alt="Reward" />
         </div>
 
-        <button @click="resetGameRound"
-          class="px-10 py-3 bg-white text-black font-bold text-lg rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:bg-gray-100 hover:scale-105 transition-all duration-300">
-          Spin Again
-        </button>
       </div>
     </div>
   </div>
@@ -245,11 +251,13 @@ import { ref, reactive, computed } from "vue";
 // --- Import Asset ---
 import pinImg from "../assets/img/Pin.png";
 import wrapperImg from "../assets/img/wrapper.png";
+import circleBlueImg from "../assets/img/Circle-blue.png";
 import imgRed from "../assets/img/image-red.png";
 import imgBlue from "../assets/img/image-blue.png";
 import imgGreen from "../assets/img/image-green.png";
 import imgGray from "../assets/img/image-gray.png";
 import hudImg from "../assets/img/HeartBar.png";
+import logoLuvImg from "../assets/img/LogoLuv.png";
 import bgImage from "../assets/img/Drop-frame.png";
 import letterA from "../assets/img/A.png";
 import letterN from "../assets/img/N.png";
@@ -260,13 +268,14 @@ import letterR from "../assets/img/R.png";
 import letterS from "../assets/img/S.png";
 import letterY from "../assets/img/Y.png";
 
+
 // --- Configuration ---
 const remainingSpins = ref(3);
 const spinCount = ref(1);
 
 // Reward Data
 const rewards = ref([
-  { id: 1, name: "iPhone 17", stock: 1, weight: 1, theme: "red", resultImage: imgRed },
+  { id: 1, name: "iPhone 17", stock: 1, weight: 100, theme: "red", resultImage: imgRed },
   { id: 2, name: "PS5", stock: 2, weight: 2, theme: "blue", resultImage: imgBlue },
   { id: 3, name: "iPad", stock: 3, weight: 5, theme: "blue", resultImage: imgBlue },
   { id: 4, name: "HyperX", stock: 5, weight: 10, theme: "green", resultImage: imgGreen },
@@ -397,6 +406,20 @@ const resetGameRound = () => {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Allison&display=swap');
+
+.font-line-seed {
+  font-family: 'LINE Seed Sans TH', sans-serif;
+}
+
+.font-lucky-wheel {
+  font-family: 'Allison', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 64px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
 
 .font-balloon {
   font-family: "Titan One", cursive;
@@ -456,9 +479,9 @@ const resetGameRound = () => {
   }
 }
 
-.animate-spin-slow {
+/* .animate-spin-slow {
   animation: spin-slow 60s linear infinite;
-}
+} */
 
 @keyframes pulse-slow {
 
