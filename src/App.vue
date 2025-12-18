@@ -239,6 +239,14 @@ import imgGreen from '../assets/img/image-green.png';
 import imgGray from '../assets/img/image-gray.png';
 import hudImg from '../assets/img/HeartBar.png';
 import bgImage from '../assets/img/Drop-frame.png';
+import letterA from '../assets/img/A.png';
+import letterN from '../assets/img/N.png';
+import letterI from '../assets/img/I.png';
+import letterV from '../assets/img/V.png';
+import letterE from '../assets/img/E.png';
+import letterR from '../assets/img/R.png';
+import letterS from '../assets/img/S.png';
+import letterY from '../assets/img/Y.png';
 
 // --- Configurarion ---
 const remainingSpins = ref(3); // Set Spin Limit
@@ -257,17 +265,17 @@ const rewards = ref([
 
 // Word Data
 const targetWord = reactive([
-  { char: 'A', image:"../assets/img/A.png", collected: false },
-  { char: 'N', image: "../assets/img/N.png", collected: false },
-  { char: 'N', image: "../assets/img/N.png", collected: false },
-  { char: 'I', image: "../assets/img/I.png", collected: false },
-  { char: 'V', image:"../assets/img/V.png", collected: false },
-  { char: 'E', image: "../assets/img/E.png" ,collected: false },
-  { char: 'R', image:"../assets/img/R.png", collected: false },
-  { char: 'S', image: "../assets/img/S.png", collected: false },
-  { char: 'A', image: "../assets/img/A.png", collected: false },
-  { char: 'R', image: "../assets/img/R.png", collected: false },
-  { char: 'Y', image: "../assets/img/Y.png", collected: false },
+  { char: 'A', image: letterA, collected: false }, 
+  { char: 'N', image: letterN, collected: false },
+  { char: 'N', image: letterN, collected: false },
+  { char: 'I', image: letterI, collected: false },
+  { char: 'V', image: letterV, collected: false },
+  { char: 'E', image: letterE, collected: false },
+  { char: 'R', image: letterR, collected: false },
+  { char: 'S', image: letterS, collected: false },
+  { char: 'A', image: letterA, collected: false },
+  { char: 'R', image: letterR, collected: false },
+  { char: 'Y', image: letterY, collected: false },
 ]);
 
 // --- Function Logic ---
