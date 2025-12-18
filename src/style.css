@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS สำหรับทำแสงระเบิดด้านหลัง (Sunburst) */
+.sunburst {
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0, 0, 0, 0.8) 0deg 10deg,
+    rgba(30, 58, 138, 0.2) 10deg 20deg
+  );
+}
