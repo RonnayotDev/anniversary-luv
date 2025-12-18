@@ -219,7 +219,7 @@
           </div>
 
           <button @click="resetGameRound" class="px-10 py-3 bg-white text-black font-bold text-lg rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:bg-gray-100 hover:scale-105 transition-all duration-300">
-             เก็บสะสมใหม่
+             Spin Again
           </button>
        </div>
     </div>
